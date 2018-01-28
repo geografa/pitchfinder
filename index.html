@@ -16,26 +16,27 @@
 <style>
 #map {
     position:absolute;
-    left:25%;
+    left:20%;
     top:0;
     bottom:0;
-    width: 75%;
+    width: 80%;
 }
 .map-overlay {
     position: absolute;
-    width: 25%;
+    width: 20%;
     top: 0;
     bottom: 0;
     left: 0;
     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     background-color: #fff;
+    color: #333;
     max-height: 100%;
     overflow: hidden;
 }
 
 .map-overlay fieldset {
     display: none;
-    background: #ddd;
+    background: #333;
     border: none;
     padding: 10px;
     margin: 0;
@@ -44,7 +45,7 @@
 .map-overlay input {
     display: block;
     border: none;
-    width: 93%;
+    width: 80%;
     border-radius: 3px;
     padding: 10px;
     margin: 0;
@@ -63,7 +64,7 @@
 
 .map-overlay .listing a {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    color: #404;
+    color: #0d47a1;
     text-decoration: none;
 }
 
@@ -72,7 +73,8 @@
 }
 
 .map-overlay .listing a:hover {
-    background: #f0f0f0;
+    background: #333;
+    color: #fff;
 }
 
 .mapboxgl-popup-content {
