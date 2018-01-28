@@ -75,6 +75,40 @@
     background: #f0f0f0;
 }
 
+.mapboxgl-popup-content {
+    background-color: #333;
+    color: #fff;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+    border-bottom-color: #333;
+}
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip {;
+    border-left: #333;
+    border-bottom-color: #333;
+}
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+    border-right: #333;
+    border-bottom-color: #333;
+}
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+    border-top-color: #333;
+}
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip {one;
+    border-left: #333;
+    border-top-color: #333;
+}
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {ne;
+    border-right: #333;
+    border-top-color: #333;
+}
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+    border-right-color: #333;
+}
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+    border-left-color: #333;
+}
+
 .typeform-share link {
     text-align: center;
     margin: 10px;
@@ -110,7 +144,7 @@ var pitches = [];
 
 // Create a popup, but don't add it to the map yet.
 var popup = new mapboxgl.Popup({
-    closeButton: false
+    closeButton: true
 });
 
 var filterEl = document.getElementById('feature-filter');
@@ -221,7 +255,7 @@ map.on('load', function() {
                             "dot-blue"
                         ],
                         [
-                            12,
+                            13,
                             "soccer-ball"
                         ],
                         [
@@ -242,7 +276,7 @@ map.on('load', function() {
                             0.5
                         ],
                         [
-                            12,
+                            13,
                             0.35
                         ],
                         [
