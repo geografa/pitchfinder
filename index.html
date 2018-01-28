@@ -74,11 +74,19 @@
 .map-overlay .listing a:hover {
     background: #f0f0f0;
 }
+
+.typeform-share link {
+    text-align: center;
+    margin: 10px;
+}
 </style>
 
 <div id='map'></div>
 
 <div class='map-overlay'>
+    <div class='feedback'>
+        
+    </div>
     <fieldset>
         <input id='feature-filter' type='text' placeholder='Filter results by name' />
     </fieldset>
@@ -142,9 +150,13 @@ function renderListings(features) {
 
         // Show the filter input
         filterEl.parentNode.style.display = 'block';
+        var empty = document.createElement('div');
+        empty.innerHTML = '<a class="typeform-share link" href="https://rafa53.typeform.com/to/SQ47Fb" data-mode="drawer_right" style="color:#1885da;text-decoration:underline;font-size:14px;" target="_blank">Feedback? </a>';
+        listingEl.appendChild(empty);
+
     } else {
         var empty = document.createElement('p');
-        empty.textContent = 'Drag the map to populate results';
+        empty.textContent = 'Find a field. Drag the map to start populating some results';
         listingEl.appendChild(empty);
 
         // Hide the filter input
@@ -313,8 +325,10 @@ map.on('click', function () {
         pitch: 0,
         bearing: 0
     });
-})
+});
 </script>
 
+<!-- typeform -->
+<script> (function() { var qs,js,q,s,d=document, gi=d.getElementById, ce=d.createElement, gt=d.getElementsByTagName, id="typef_orm_share", b="https://embed.typeform.com/"; if(!gi.call(d,id)){ js=ce.call(d,"script"); js.id=id; js.src=b+"embed.js"; q=gt.call(d,"script")[0]; q.parentNode.insertBefore(js,q) } })() </script>
 </body>
 </html>
