@@ -315,7 +315,7 @@ map.on('load', function() {
         // Populate the popup and set its coordinates based on the feature.
         var feature = e.features[0];
         popup.setLngLat(feature.geometry.coordinates)
-            .setText(feature.properties.name + ' (' + feature.properties.id + ')')
+            .setText(feature.properties.name)
             .addTo(map);
     });
 
