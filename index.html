@@ -295,7 +295,7 @@ map.on('load', function() {
         var features = map.queryRenderedFeatures({layers:['soccer']});
 
         if (features) {
-            var uniqueFeatures = getUniqueFeatures(features, "id");
+            var uniqueFeatures = getUniqueFeatures(features, "name");
             // Populate features for the listing overlay.
             renderListings(uniqueFeatures);
 
@@ -330,8 +330,8 @@ map.on('load', function() {
         // Filter visible features that don't match the input value.
         var filtered = pitches.filter(function(feature) {
             var name = normalize(feature.properties.name);
-            var code = normalize(feature.properties.name);
-            return name.indexOf(value) > -1 || code.indexOf(value) > -1;
+            // var code = normalize(feature.properties.name);
+            return name.indexOf(value) > -1;
         });
 
         // Populate the sidebar with filtered results
@@ -362,6 +362,15 @@ map.on('click', function () {
         bearing: 0
     });
 });
+
+// Add geolocate control to the map.
+map.addControl(new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true
+}));
+
 </script>
 
 <!-- typeform -->
