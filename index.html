@@ -165,7 +165,7 @@ function renderListings(features) {
             item.addEventListener('mouseover', function() {
                 // Highlight corresponding feature on the map
                 popup.setLngLat(coords)
-                    .setText(prop.name + ' (' + prop.id + ')')
+                    .setText(prop.name)
                     .addTo(map);
             });
             item.addEventListener('click', function () {
