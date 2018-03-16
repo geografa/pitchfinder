@@ -80,6 +80,10 @@
 .mapboxgl-popup-content {
     background-color: #333;
     color: #fff;
+    border-radius:12px;
+}
+.mapboxgl-popup-content h2 {
+    margin-bottom:0;
 }
 
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
@@ -110,18 +114,29 @@
 .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
     border-left-color: #333;
 }
+.radio-toolbar input[type="radio"] {
+  display: none;
+}
+.radio-toolbar label {
+  display: inline-block;
+  background-color: #333;
+  padding: 4px 11px;
+  cursor: pointer;
+  color: #bbb;
+}
+.radio-toolbar input[type="radio"]:checked+label {
+  background-color: #197bc3;
+  color: #fff;
+}
 
 .typeform-share link {
     text-align: center;
     margin: 10px;
 }
 </style>
-
 <div id='map'></div>
-
 <div class='map-overlay'>
     <div class='feedback'>
-        
     </div>
     <fieldset>
         <input id='feature-filter' type='text' placeholder='Filter results by name' />
@@ -157,15 +172,16 @@ function renderListings(features) {
     listingEl.innerHTML = '';
     if (features.length) {
         features.forEach(function(feature) {
+            // the field link
             var coords = feature.geometry.coordinates;
             var prop = feature.properties;
             var item = document.createElement('a');
             item.href = '#';
-            item.textContent = prop.name;
+            item.innerHTML = prop.name;
             item.addEventListener('mouseover', function() {
                 // Highlight corresponding feature on the map
                 popup.setLngLat(coords)
-                    .setText(prop.name)
+                    .setHTML(prop.name)
                     .addTo(map);
             });
             item.addEventListener('click', function () {
@@ -220,11 +236,22 @@ function getUniqueFeatures(array, comparatorProperty) {
             return true;
         }
     });
-
     return uniqueFeatures;
 }
 
 map.on('load', function() {
+    var center = map.getCenter();
+    map.flyTo({
+        center: center,
+        zoom: 10,
+        speed: 1.0,
+        curve: 1,
+        easing(t) {
+            return t;
+        },
+        pitch: 0,
+        bearing: 0
+    });
 
     map.addLayer({
             "id": "soccer",
@@ -315,13 +342,21 @@ map.on('load', function() {
         // Populate the popup and set its coordinates based on the feature.
         var feature = e.features[0];
         popup.setLngLat(feature.geometry.coordinates)
-            .setText(feature.properties.name)
+            .setHTML('<h2>' + feature.properties.name + '</h2>' + 
+            '<div class="radio-toolbar"><br>' + 
+                  '<input type="radio" id="radio1" name="radios" value="going">' +
+                  '<label for="radio1"><img src="./assets/yes.svg" width=20px ></label>' +
+                  '<input type="radio" id="radio2" name="radios" value="not-going" checked>' +
+                  '<label for="radio2"><img src="./assets/no.svg" width=20px ></label>' +
+                  '<input type="radio" id="radio3" name="radios" value="maybe">' +
+                  '<label for="radio3"><img src="./assets/maybe.svg" width=20px ></label>' +
+            '</div>')
             .addTo(map);
     });
 
     map.on('mouseleave', 'soccer', function() {
         map.getCanvas().style.cursor = '';
-        popup.remove();
+        // popup.remove();
     });
 
     filterEl.addEventListener('keyup', function(e) {
@@ -330,7 +365,6 @@ map.on('load', function() {
         // Filter visible features that don't match the input value.
         var filtered = pitches.filter(function(feature) {
             var name = normalize(feature.properties.name);
-            // var code = normalize(feature.properties.name);
             return name.indexOf(value) > -1;
         });
 
@@ -348,20 +382,6 @@ map.on('load', function() {
     renderListings([]);
 });
 map.addControl(new mapboxgl.NavigationControl());
-map.on('click', function () {
-    var center = map.getCenter();
-    map.flyTo({
-        center: center,
-        zoom: 12,
-        speed: 3.5,
-        curve: 1,
-        easing(t) {
-            return t;
-        },
-        pitch: 0,
-        bearing: 0
-    });
-});
 
 // Add geolocate control to the map.
 map.addControl(new mapboxgl.GeolocateControl({
