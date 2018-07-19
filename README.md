@@ -3,4 +3,4 @@ find futbol fields ⚽️
 
 See `/sporty-map-style` to download the original Mapbox map style.
 
-![](https://user-images.githubusercontent.com/134753/35495912-54acd6c6-0478-11e8-9c7a-f7a46c5b0d12.gif)
+![](https://user-images.githubusercontent.com/134753/42919353-50f62486-8ac6-11e8-8c2d-dd72e37f5260.gif)
