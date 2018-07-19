@@ -27,6 +27,14 @@
   </style>
 </head>
 <body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=146253569362639&autoLogAppEvents=1';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
     <div id='map'></div>
     <div id='info'></div>
   <script>
@@ -40,14 +48,6 @@
   });
 
   map.on('load',function () {
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=358960734501922&autoLogAppEvents=1';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
     map.addLayer({
       "id": "portland-soccer-pitches",
       "type": "symbol",
@@ -4578,7 +4578,7 @@ map.on('click', 'portland-soccer-pitches', function (e) {
 
   new mapboxgl.Popup()
   .setLngLat(coordinates)
-  .setHTML('<strong>' + name + '</strong><div class="fb-share-button" data-href="https://geografa.github.io/pitchfinder/#14.43/45.5231/-122.65581" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgeografa.github.io%2Fpitchfinder%2F%23&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>')
+  .setHTML('<strong>' + name + '</strong><div id="fb-root"></div><div class="fb-comments" data-href="https://geografa.github.io/pitchfinder/#11/45.5225/-122.6777" data-width="140" data-numposts="5"></div>')
   .addTo(map);
 });
 
