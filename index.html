@@ -49,13 +49,9 @@
       "source-layer": "portland-soccer-pitches",
       "layout": {
         "icon-image": "soccer-ball",
-        "icon-size": 0.18,
+        "icon-size": 0.28,
         "icon-allow-overlap": true
-      },
-      // "paint": {
-      //     "line-color": "#ff69b4",
-      //     "line-width": 1
-      // }
+      }
     });
   })
 
@@ -4586,6 +4582,14 @@ map.on('mouseenter', 'portland-soccer-pitches', function () {
 map.on('mouseleave', 'portland-soccer-pitches', function () {
   map.getCanvas().style.cursor = '';
 });
+
+// Add geolocate control to the map.
+map.addControl(new mapboxgl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    trackUserLocation: true
+}),'top-left');
 
 </script>
 
