@@ -27,8 +27,8 @@
   </style>
 </head>
 <body>
-  <div id='map'></div>
-  <div id='info'></div>
+    <div id='map'></div>
+    <div id='info'></div>
   <script>
   mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2oydGJoajI5MDA1bjJxbzZzZjd5MXl3NSJ9.vNVFm6NsFzeX0AGSjFHpqg';
   var map = new mapboxgl.Map({
@@ -40,6 +40,14 @@
   });
 
   map.on('load',function () {
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=358960734501922&autoLogAppEvents=1';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
     map.addLayer({
       "id": "portland-soccer-pitches",
       "type": "symbol",
@@ -4570,7 +4578,7 @@ map.on('click', 'portland-soccer-pitches', function (e) {
 
   new mapboxgl.Popup()
   .setLngLat(coordinates)
-  .setHTML('<strong>' + name + '</strong><br>Going?<input type="radio" name="going" value="yes"> Yes<input type="radio" name="going" value="no" checked> No<input type="radio" name="going" value="maybe"> Maybe')
+  .setHTML('<strong>' + name + '</strong><div class="fb-share-button" data-href="https://geografa.github.io/pitchfinder/#14.43/45.5231/-122.65581" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgeografa.github.io%2Fpitchfinder%2F%23&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>')
   .addTo(map);
 });
 
@@ -4592,7 +4600,7 @@ map.addControl(new mapboxgl.GeolocateControl({
     trackUserLocation: true
 }),'top-left');
 
-</script>
+  </script>
 
 </body>
 </html>
