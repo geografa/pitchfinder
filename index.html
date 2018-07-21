@@ -4578,6 +4578,7 @@
     var matchingFeatures = []
     for (i=0; i<customData.features.length; i++){
       var feature = customData.features[i]
+      query.toLowerCase();
       if (feature.properties.name.search(query) !== -1){
         feature['place_name']= '⚽️ ' + feature.properties.name
         feature['center'] = feature.geometry.coordinates
@@ -4602,6 +4603,10 @@ map.on('click', 'portland-soccer-pitches', function (e) {
   var coordinates = e.features[0].geometry.coordinates.slice();
   var name = e.features[0].properties.name;
 
+  var search = decodeURIComponent(window.location.hash.split('#')[1]);
+  var pitch = 'https://geografa.github.io/pitchfinder/#' + search;
+  console.log(pitch);
+
   // Ensure that if the map is zoomed out such that multiple
   // copies of the feature are visible, the popup appears
   // over the copy being pointed to.
@@ -4609,9 +4614,13 @@ map.on('click', 'portland-soccer-pitches', function (e) {
     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
   }
 
+
+
+
+
   new mapboxgl.Popup()
   .setLngLat(coordinates)
-  .setHTML('<strong>' + name + '</strong>')
+  .setHTML('<strong>' + name + '</strong><br><a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Make%20sure%20the%20URL%20is%20in%20tact:%20'+ pitch + '">report location</a>')
   .addTo(map);
 });
 
