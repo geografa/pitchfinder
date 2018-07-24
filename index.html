@@ -80,23 +80,6 @@
     hash: true
   });
 
-  // map.on('load',function () {
-  //   map.addLayer({
-  //     "id": "portland-soccer-pitches",
-  //     "type": "symbol",
-  //     "source": {
-  //       "type": 'vector',
-  //       "url": 'mapbox://grafa.cjblbqghw4k7x2yqfk7lmkq4u-7mvn8'
-  //     },
-  //     "source-layer": "portland-soccer-pitches",
-  //     "layout": {
-  //       "icon-image": "soccer-ball",
-  //       "icon-size": 0.28,
-  //       "icon-allow-overlap": true
-  //     }
-  //   });
-  // })
-
   var customData = {
     "features": [
     {
@@ -4612,6 +4595,8 @@
             placeholder: "e.g Grant HS"
           }));
 
+var popup = new mapboxgl.Popup()
+
 // When a click event occurs on a feature in the portland-soccer-pitches layer, open a popup at the
 // location of the feature, with description HTML from its properties.
 map.on('click', 'portland-soccer-pitches', function (e) {
@@ -4628,37 +4613,69 @@ map.on('click', 'portland-soccer-pitches', function (e) {
     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
   }
   
-
-  new mapboxgl.Popup()
-  .setLngLat(coordinates)
-  .setHTML('<strong>' + name + '</strong><br><a href="#" onclick="getLocation(getRoute)">🚗 Directions</a><br>'+
-    '<a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Make%20sure%20the%20URL%20is%20in%20tact:%20'+ pitch + '">Suggest an edit</a>')
-  .addTo(map);
+  popup.setLngLat(coordinates)
+    .setHTML('<strong>' + name + '</strong><br><a href="#" onclick="getLocation(getRoute)">🚗 Directions</a><br>'+
+    '<a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Make%20sure%20the%20URL%20is%20in%20tact:%20'+ pitch + '">Suggest an edit</a>');
+  popup.addTo(map);
 });
-
 
 const getLocation = (callback) => {
   navigator.geolocation.getCurrentPosition(function(position) {
     var start = position.coords.longitude + ',' + position.coords.latitude;
     callback(start);
-    // return start;
   });
 };
 
-const getRoute = (start) => {
-  var destination = map.getCenter('features').lng + ',' + map.getCenter('features').lat;
-  var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start + ';' + 
-  destination + 
-  '?access_token=pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2oydGJoajI5MDA1bjJxbzZzZjd5MXl3NSJ9.vNVFm6NsFzeX0AGSjFHpqg';
+const getRoute = (start,dest) => {
+  var dest = popup.getLngLat();
+  var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start + ';' + dest.lng + ',' + dest.lat +
+  '?geometries=geojson&access_token=pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2oydGJoajI5MDA1bjJxbzZzZjd5MXl3NSJ9.vNVFm6NsFzeX0AGSjFHpqg';
   console.log(url);
   var req = new XMLHttpRequest();
   req.responseType = 'json';
   req.open('GET', url, true);
   req.onload  = function() {
      var jsonResponse = req.response;
-     console.log(jsonResponse);
+     var route = jsonResponse.routes[0].geometry.coordinates;
+     var geojson = {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "LineString",
+            "coordinates": route
+          }
+        };
+    if (map.getSource('route')) {
+      map.getSource('route').setData(geojson);
+    } else{
+      map.addLayer({
+        "id": "route",
+        "type": "line",
+        "source": {
+          "type": "geojson",
+          "data": {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+              "type": "LineString",
+              "coordinates": route
+            }
+          }
+
+        },
+        "layout": {
+          "line-join": "round",
+          "line-cap": "round"
+        },
+        "paint": {
+          "line-color": "#007fff",
+          "line-width": 5,
+          "line-opacity": 0.75
+        }
+      },'portland-soccer-pitches');
+    };
   };
-  req.send();  
+  req.send();
 }
 
 
