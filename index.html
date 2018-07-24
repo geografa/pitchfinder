@@ -80,22 +80,22 @@
     hash: true
   });
 
-  map.on('load',function () {
-    map.addLayer({
-      "id": "portland-soccer-pitches",
-      "type": "symbol",
-      "source": {
-        "type": 'vector',
-        "url": 'mapbox://grafa.cjblbqghw4k7x2yqfk7lmkq4u-7mvn8'
-      },
-      "source-layer": "portland-soccer-pitches",
-      "layout": {
-        "icon-image": "soccer-ball",
-        "icon-size": 0.28,
-        "icon-allow-overlap": true
-      }
-    });
-  })
+  // map.on('load',function () {
+  //   map.addLayer({
+  //     "id": "portland-soccer-pitches",
+  //     "type": "symbol",
+  //     "source": {
+  //       "type": 'vector',
+  //       "url": 'mapbox://grafa.cjblbqghw4k7x2yqfk7lmkq4u-7mvn8'
+  //     },
+  //     "source-layer": "portland-soccer-pitches",
+  //     "layout": {
+  //       "icon-image": "soccer-ball",
+  //       "icon-size": 0.28,
+  //       "icon-allow-overlap": true
+  //     }
+  //   });
+  // })
 
   var customData = {
   "features": [
@@ -4612,29 +4612,28 @@
             placeholder: "e.g Grant HS"
           }));
 
-// // When a click event occurs on a feature in the portland-soccer-pitches layer, open a popup at the
-// // location of the feature, with description HTML from its properties.
-// map.on('click', 'portland-soccer-pitches', function (e) {
-//   e.preventDefault();
-//   var coordinates = e.features[0].geometry.coordinates.slice();
-//   var name = e.features[0].properties.name;
+// When a click event occurs on a feature in the portland-soccer-pitches layer, open a popup at the
+// location of the feature, with description HTML from its properties.
+map.on('click', 'portland-soccer-pitches', function (e) {
+  var coordinates = e.features[0].geometry.coordinates.slice();
+  var name = e.features[0].properties.name;
 
-//   var search = decodeURIComponent(window.location.hash.split('#')[1]);
-//   var pitch = 'https://geografa.github.io/pitchfinder/#' + search;
-//   console.log(pitch);
+  var search = decodeURIComponent(window.location.hash.split('#')[1]);
+  var pitch = 'https://geografa.github.io/pitchfinder/#' + search;
+  console.log(pitch);
 
-//   // Ensure that if the map is zoomed out such that multiple
-//   // copies of the feature are visible, the popup appears
-//   // over the copy being pointed to.
-//   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-//     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-//   }
+  // Ensure that if the map is zoomed out such that multiple
+  // copies of the feature are visible, the popup appears
+  // over the copy being pointed to.
+  while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+  }
 
-//   new mapboxgl.Popup()
-//   .setLngLat(coordinates)
-//   .setHTML('<strong>' + name + '</strong><br><a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Make%20sure%20the%20URL%20is%20in%20tact:%20'+ pitch + '">report location</a>')
-//   .addTo(map);
-// });
+  new mapboxgl.Popup()
+  .setLngLat(coordinates)
+  .setHTML('<strong>' + name + '</strong><br><a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Make%20sure%20the%20URL%20is%20in%20tact:%20'+ pitch + '">report location</a>')
+  .addTo(map);
+});
 
 // Change the cursor to a pointer when the mouse is over the portland-soccer-pitches layer.
 map.on('mouseenter', 'portland-soccer-pitches', function () {
