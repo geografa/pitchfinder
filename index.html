@@ -53,6 +53,9 @@
       left: 0;
       top: 10px;
     }
+    h3  {
+      margin: 0;
+    }
   </style>
 </head>
 <body>
@@ -128,7 +131,7 @@ map.on('click', 'portland-soccer-pitches', function (e) {
   }
   
   popup.setLngLat(coordinates)
-    .setHTML('<strong>' + name + '</strong><br>🚗 <a href="#" onclick="getLocation(getRoute)">Directions</a><br>'+
+    .setHTML('<h3>' + name + '</h3><br>🚗 <a href="#" onclick="getLocation(getRoute)">Directions</a><br>'+
     '📝 <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Make%20sure%20the%20URL%20is%20in%20tact:%20'+ pitch + '">Suggest an edit</a>');
   popup.addTo(map);
 });

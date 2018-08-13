@@ -3061,7 +3061,7 @@ var customData = {
       "type": "Feature",
       "properties": {
         "id": "133300072",
-        "name": "Sportsplex"
+        "name": "MJCC"
       },
       "geometry": {
         "coordinates": [
