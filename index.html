@@ -94,7 +94,8 @@ function forwardGeocoder(query) {
   for (i=0; i<customData.features.length; i++){
     var feature = customData.features[i]
     query.toLowerCase();
-    if (feature.properties.name.search(query) !== -1){
+    if (feature.properties.name.toLowerCase().search(query.toLowerCase()) !== -1) {
+    // if (feature.properties.name.search(query) !== -1){
       feature['place_name']= '⚽️ ' + feature.properties.name
       feature['center'] = feature.geometry.coordinates
       // feature['place_type'] = ['park']
