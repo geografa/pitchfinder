@@ -53,8 +53,22 @@
       left: 0;
       top: 10px;
     }
-    h3  {
+    .duration {
+      font-size: 2em;
+    }
+    .mapboxgl-popup-content {
+      border-radius: 10px;
+      color: #ffffff;
+      background: #1f6cd4;
+    }
+    .mapboxgl-popup-content a {
+      color: #ffffff;
+    }
+    .mapboxgl-popup-content h3  {
       margin: 0;
+    }
+    .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+      border-top-color: #1f6cd4;
     }
   </style>
 </head>
@@ -74,6 +88,7 @@
 <div id='info'>
   <div class="fb-share-button" data-href="https://geografa.github.io/pitchfinder/" data-layout="button_count"></div>
 </div>
+
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2pjeG40N3cyMTZ6ajMzbzUwNHFleWRsMiJ9.n1yXQ4YMRi9ylrhaeah5dA';
 var map = new mapboxgl.Map({
@@ -132,7 +147,7 @@ map.on('click', 'portland-soccer-pitches', function (e) {
   }
   
   popup.setLngLat(coordinates)
-    .setHTML('<h3>' + name + '</h3><br>🚗 <a href="#" onclick="getLocation(getRoute)">Directions</a><br>'+
+    .setHTML('<h3>' + name + '</h3>🚗 <a href="#" onclick="getLocation(getRoute)">Directions</a><br>'+
     '📝 <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Make%20sure%20the%20URL%20is%20in%20tact:%20'+ pitch + '">Suggest an edit</a>');
   popup.addTo(map);
 });
@@ -146,14 +161,14 @@ const getLocation = (callback) => {
 
 const getRoute = (start,dest) => {
   var dest = popup.getLngLat();
-  var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start + ';' + dest.lng + ',' + dest.lat +
+  var url = 'https://api.mapbox.com/directions/v5/mapbox/driving-traffic/' + start + ';' + dest.lng + ',' + dest.lat +
   '?geometries=geojson&overview=full&access_token=pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2oydGJoajI5MDA1bjJxbzZzZjd5MXl3NSJ9.vNVFm6NsFzeX0AGSjFHpqg';
   var req = new XMLHttpRequest();
   req.responseType = 'json';
   req.open('GET', url, true);
   req.onload  = function() {
-     var jsonResponse = req.response;
-     var route = jsonResponse.routes[0].geometry.coordinates;
+    var data = req.response.routes[0];
+    var route = data.geometry.coordinates;
      var geojson = {
           "type": "Feature",
           "properties": {},
@@ -164,7 +179,7 @@ const getRoute = (start,dest) => {
         };
     if (map.getSource('route')) {
       map.getSource('route').setData(geojson);
-    } else{
+    } else {
       map.addLayer({
         "id": "route",
         "type": "line",
@@ -191,6 +206,26 @@ const getRoute = (start,dest) => {
         }
       },'portland-soccer-pitches');
     };
+    
+    var coordinates = geojson.geometry.coordinates;
+
+    // Pass the first coordinates in the LineString to `lngLatBounds` &
+    // wrap each coordinate pair in `extend` to include them in the bounds
+    // result. A variation of this technique could be applied to zooming
+    // to the bounds of multiple Points or Polygon geomteries - it just
+    // requires wrapping all the coordinates with the extend method.
+    var bounds = coordinates.reduce(function(bounds, coord) {
+        return bounds.extend(coord);
+    }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+
+    map.fitBounds(bounds, {
+        padding: 20
+    });
+
+    var home = JSON.parse("[" + start + "]");
+    popup.setLngLat(home)
+      .setHTML('<span class="duration">' + Math.floor(data.duration/60) + ' min 🚗💨</span>');
+    popup.addTo(map);
   };
   req.send();
 };
