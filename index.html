@@ -63,9 +63,11 @@
     }
     .mapboxgl-popup-content a {
       color: #ffffff;
+      font-size: 1.2em;
+      line-height: 2em;
     }
-    .mapboxgl-popup-content h3  {
-      margin: 0;
+    .mapboxgl-popup-content h2  {
+      margin: 5px;
     }
     .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
       border-top-color: #1f6cd4;
@@ -147,7 +149,7 @@ map.on('click', 'portland-soccer-pitches', function (e) {
   }
   
   popup.setLngLat(coordinates)
-    .setHTML('<h3>' + name + '</h3>🚗 <a href="#" onclick="getLocation(getRoute)">Directions</a><br>'+
+    .setHTML('<h2>' + name + '</h2>🚗 <a href="#" onclick="getLocation(getRoute)">Directions</a><br>'+
     '📝 <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Make%20sure%20the%20URL%20is%20in%20tact:%20'+ pitch + '">Suggest an edit</a>');
   popup.addTo(map);
 });
