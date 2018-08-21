@@ -72,6 +72,9 @@
     .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
       border-top-color: #1f6cd4;
     }
+    .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+      border-bottom-color: #1f6cd4; 
+    }
   </style>
 </head>
 <body>
@@ -130,7 +133,12 @@ map.addControl(new MapboxGeocoder({
   placeholder: "e.g Grant HS"
 }));
 
-var popup = new mapboxgl.Popup()
+var popup = new mapboxgl.Popup();
+
+map.on('load', function () {
+  var bounds = [[-123.71335832252835,45.25971894392549],[-121.65150609073802,45.79798892888519]];
+  map.setMaxBounds(bounds);
+})
 
 // When a click event occurs on a feature in the portland-soccer-pitches layer, open a popup at the
 // location of the feature, with description HTML from its properties.
