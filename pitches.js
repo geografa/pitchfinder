@@ -2640,6 +2640,21 @@ var customData = {
     {
       "type": "Feature",
       "properties": {
+        "id": 999,
+        "name": "Van Houten Fields (UofP)"
+      },
+      "geometry": {
+        "coordinates": [
+          -122.734668,
+          45.575572
+        ],
+        "type": "Point"
+      },
+      "id": "9e880e5875ef20a06c378a0d9ec02b56"
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "id": "438243818",
         "name": "Clackamas HS"
       },
@@ -2786,6 +2801,21 @@ var customData = {
         "type": "Point"
       },
       "id": "aa3324e5fdabee3b7357f96e4406d0ef"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 9999,
+        "name": "Van Houten Fields (UofP)"
+      },
+      "geometry": {
+        "coordinates": [
+          -122.735021,
+          45.576104
+        ],
+        "type": "Point"
+      },
+      "id": "aa819754cf775ab6d9377caa9e1d54b2"
     },
     {
       "type": "Feature",
