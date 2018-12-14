@@ -29,8 +29,8 @@
 
   <title>Find a soccer pitch</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
   <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
   <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
   <script src='./pitches.js'></script>
@@ -73,7 +73,7 @@
       border-top-color: #1f6cd4;
     }
     .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
-      border-bottom-color: #1f6cd4; 
+      border-bottom-color: #1f6cd4;
     }
   </style>
 </head>
@@ -95,7 +95,7 @@
 </div>
 
 <script>
-mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2pjeG40N3cyMTZ6ajMzbzUwNHFleWRsMiJ9.n1yXQ4YMRi9ylrhaeah5dA';
+mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2oyamZ0cTVqMDIwYzMybWU4N25kenpjMCJ9.9clBFPj-fOP8ZToWfis7rQ';
 var map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/grafa/cj23ol2ed000u2rr25s4yv3s5',
@@ -155,7 +155,7 @@ map.on('click', 'portland-soccer-pitches', function (e) {
   while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
   }
-  
+
   popup.setLngLat(coordinates)
     .setHTML('<h2>' + name + '</h2>🚗 <a href="#" onclick="getLocation(getRoute)">Directions</a><br>'+
     '📝 <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Make%20sure%20the%20URL%20is%20in%20tact:%20'+ pitch + '">Suggest an edit</a>');
@@ -216,7 +216,7 @@ const getRoute = (start,dest) => {
         }
       },'portland-soccer-pitches');
     };
-    
+
     var coordinates = geojson.geometry.coordinates;
 
     // Pass the first coordinates in the LineString to `lngLatBounds` &
