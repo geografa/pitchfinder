@@ -37,22 +37,29 @@
 
   <style>
     body { margin:0; padding:0; }
-    #map { position:absolute; top:0; bottom:0; width:100%; }
+    #map { position:absolute; top:165px; bottom:0; width:100%; }
     #info {
       display: block;
       position: absolute;
       margin: 0px auto;
-      /* width: 20%; */
       padding: 10px;
       border: none;
       border-radius: 3px;
       font-size: 12px;
       text-align: left;
       color: #222;
-      /*background: #fff; */
       left: 0;
       top: 10px;
     }
+		.geocoder {
+        position:absolute;
+        z-index:1;
+        width:50%;
+        left:50%;
+        margin-left:-25%;
+        top:60px;
+    }
+    .mapboxgl-ctrl-geocoder { min-width:100%; }
     .duration {
       font-size: 2em;
     }
@@ -94,6 +101,10 @@
 		.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
 			border-top-color: rgba(0, 30, 84, 0.78);
 		}
+		#heading {
+			text-align: center;
+			font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+		}
   </style>
 </head>
 <body>
@@ -109,6 +120,8 @@
 
 <!-- Your share button code -->
 <div id='map'></div>
+<div id='heading'><h2>FIND A SOCCER PITCH</h2></div>
+<div id='geocoder' class='geocoder'></div>
 <div id='info'>
   <div class="fb-share-button" data-href="https://geografa.github.io/pitchfinder/" data-layout="button_count"></div>
 </div>
@@ -144,13 +157,23 @@ function forwardGeocoder(query) {
   return matchingFeatures;
 };
 
-map.addControl(new MapboxGeocoder({
-  accessToken: mapboxgl.accessToken,
+var geocoder = new MapboxGeocoder({
+	accessToken: mapboxgl.accessToken,
   localGeocoder: forwardGeocoder,
   zoom: 17,
   bbox: [-124.0380626758699,45.2412126235823,-121.10311165853054,45.81306995608375],
   placeholder: "e.g Grant HS"
-}));
+
+});
+
+
+// map.addControl(new MapboxGeocoder({
+//   accessToken: mapboxgl.accessToken,
+//   localGeocoder: forwardGeocoder,
+//   zoom: 17,
+//   bbox: [-124.0380626758699,45.2412126235823,-121.10311165853054,45.81306995608375],
+//   placeholder: "e.g Grant HS"
+// }));
 
 var markerHeight = 20, markerRadius = 10, linearOffset = 25;
 var popupOffsets = {
@@ -339,6 +362,8 @@ map.on('moveend', function () {
   var search = decodeURIComponent(window.location.hash.split('#')[1]);
   var pitch = 'https://geografa.github.io/pitchfinder/#' + search;
 });
+
+document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
 </script>
 
