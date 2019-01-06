@@ -115,7 +115,7 @@
 
 <!-- Your share button code -->
 <div id='map'></div>
-<div id='heading'><h2>FIND A SOCCER PITCH</h2></div>
+<div id='heading'><h2>PDX.FUTBOL</h2></div>
 <div id='geocoder' class='geocoder'></div>
 <div id='info'>
   <div class="fb-share-button" data-href="https://geografa.github.io/pitchfinder/" data-layout="button_count"></div>
@@ -161,15 +161,6 @@ var geocoder = new MapboxGeocoder({
 
 });
 
-
-// map.addControl(new MapboxGeocoder({
-//   accessToken: mapboxgl.accessToken,
-//   localGeocoder: forwardGeocoder,
-//   zoom: 17,
-//   bbox: [-124.0380626758699,45.2412126235823,-121.10311165853054,45.81306995608375],
-//   placeholder: "e.g Grant HS"
-// }));
-
 var markerHeight = 20, markerRadius = 10, linearOffset = 25;
 var popupOffsets = {
  'top': [0, 0],
@@ -213,8 +204,9 @@ const getPitches = (callback) => {
 }
 
 map.on('load', function () {
-  var bounds = [[-123.71335832252835,45.25971894392549],[-121.65150609073802,45.79798892888519]];
-  map.setMaxBounds(bounds);
+	// keep portland specific?
+  // var bounds = [[-123.71335832252835,45.25971894392549],[-121.65150609073802,45.79798892888519]];
+  // map.setMaxBounds(bounds);
 	getPitches();
 });
 
