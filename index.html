@@ -2,10 +2,10 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <meta property="og:url"                content="https://geografa.github.io/pitchfinder/" />
+  <meta property="og:url"                content="https://pdx.futbol/" />
   <meta property="og:type"               content="place" />
-  <meta property="og:title"              content="⚽️ Find a pitch" />
-  <meta property="og:description"        content="Get info on regular games around Portland" />
+  <meta property="og:title"              content="Find a local pickup game or field ⚽️ " />
+  <meta property="og:description"        content="Get info on pickup games and field locations in and around Portland" />
   <meta property="og:image"              content="https://geografa.github.io/pitchfinder/assets/pitchfinder.jpg" />
   <meta property="fb:app_id"             content="146253569362639" />
 
@@ -27,32 +27,55 @@
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
-  <title>Find a soccer pitch</title>
+  <title>PDX.FUTBOL | Find a local pickup game or field ⚽️ </title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
   <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
   <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
-  <script src='./pitches.js'></script>
+  <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
 
   <style>
     body { margin:0; padding:0; }
-    #map { position:absolute; top:165px; bottom:0; width:100%; }
-    
-		#info {
-			position: relative;
-			margin: auto;
-			width: 50%;
-			top: 52px;
-			text-align: center;
+    #map { position:absolute; top:175px; bottom:0; width:100%; }
+    #info {
+      position: relative;
+      width:50%; 
+      margin:auto;
+      top: 58px;
+    }
+    .about {
+      float: right;
+    }
+    .fb_iframe_widget {
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+    }
+    #twitter-widget-0 {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    #heading {
+			text-align: center;      
 		}
+    .title {
+      font-family: 'Monoton', cursive;
+      font-size: 1.4em;
+      margin-bottom: 0;
+    }
+    .subtitle {
+      margin-top: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.75em;
+    }
 		.geocoder {
-        position:absolute;
+        position: absolute;;
         z-index:1;
         width:50%;
         left:50%;
         margin-left:-25%;
-        top:60px;
+        top:90px;
     }
     .mapboxgl-ctrl-geocoder { min-width:100%; }
     .duration {
@@ -95,30 +118,21 @@
 		}
 		.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
 			border-top-color: rgba(0, 30, 84, 0.78);
-		}
-		#heading {
-			text-align: center;
-			font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-		}
+    }
+
   </style>
 </head>
 <body>
-<!-- Load Facebook SDK for JavaScript -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-<!-- Your share button code -->
 <div id='map'></div>
-<div id='heading'><h2>PDX.FUTBOL</h2></div>
+<div id='heading'>
+  <p class='title'>PDX.FUTBOL</p>
+  <p class='subtitle'>find a pickup game. find a field.</p>
+</div>
 <div id='geocoder' class='geocoder'></div>
-<div id='info'>
-  <div class="fb-share-button" data-href="https://geografa.github.io/pitchfinder/" data-layout="button_count"></div>
+<div id="info">
+    <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Find%20local%20pickup%20game%20or%20find%20your%20field%20%E2%9A%BD%EF%B8%8F"></a>
+    <div class="fb-share-button" data-href="https://pdx.futbol/" data-layout="button_count"></div>
+    <a href="about.html" class='about'><img src="./assets/Infobox_info_icon.svg" alt="about" height="25px"></a>
 </div>
 
 <script>
@@ -353,6 +367,30 @@ map.on('moveend', function () {
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
 
 </script>
-
+<script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+  
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+  <!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>
