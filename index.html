@@ -6,7 +6,7 @@
   <meta property="og:type"               content="place" />
   <meta property="og:title"              content="Find a local pickup game or field ⚽️ " />
   <meta property="og:description"        content="Get info on pickup games and field locations in and around Portland" />
-  <meta property="og:image"              content="https://geografa.github.io/pitchfinder/assets/pitchfinder.jpg" />
+  <meta property="og:image"              content="https://pdx.futbol/assets/pitchfinder.jpg" />
   <meta property="fb:app_id"             content="146253569362639" />
 
   <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
@@ -145,15 +145,22 @@ var map = new mapboxgl.Map({
   zoom: 11,
   hash: true
 });
+// disable map rotation using right click + drag
+map.dragRotate.disable();
+
+// disable map rotation using touch rotation gesture
+map.touchZoomRotate.disableRotation();
 
 function forwardGeocoder(query) {
   var pitches = map.querySourceFeatures('portland-soccer-pitches', {
     sourceLayer: 'portland-soccer-pitches',
   });
 
+  console.log(pitches);
+
   var matchingFeatures = []
-  for (i=0; i<customData.features.length; i++){
-    var feature = customData.features[i]
+  for (i=0; i<pitches.length; i++){
+    var feature = pitches[i]
     query.toLowerCase();
     if (feature.properties.name.toLowerCase().search(query.toLowerCase()) !== -1) {
     // if (feature.properties.name.search(query) !== -1){
@@ -172,7 +179,6 @@ var geocoder = new MapboxGeocoder({
   zoom: 17,
   bbox: [-124.0380626758699,45.2412126235823,-121.10311165853054,45.81306995608375],
   placeholder: "e.g Grant HS"
-
 });
 
 var markerHeight = 20, markerRadius = 10, linearOffset = 25;
@@ -231,7 +237,7 @@ map.on('click', 'portland-soccer-pitches', function (e) {
   var name = e.features[0].properties.name;
 
   var search = decodeURIComponent(window.location.hash.split('#')[1]);
-  var pitch = 'https://geografa.github.io/pitchfinder/#' + search;
+  var pitch = 'https://pdx.futbol/#' + search;
 
   // Ensure that if the map is zoomed out such that multiple
   // copies of the feature are visible, the popup appears
@@ -361,7 +367,7 @@ map.on('mouseleave', 'portland-soccer-pitches', function () {
 // used for suggesting an edit
 map.on('moveend', function () {
   var search = decodeURIComponent(window.location.hash.split('#')[1]);
-  var pitch = 'https://geografa.github.io/pitchfinder/#' + search;
+  var pitch = 'https://pdx.futbol/#' + search;
 });
 
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
