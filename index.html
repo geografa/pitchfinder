@@ -238,7 +238,7 @@ const getPitches = (callback) => {
         // Calculate color for each state based on the likes
         data.forEach(function(row) {
             var opacity = (row["likes"] / maxValue);
-            var color = "rgba(" + 47 + ", " + 114 + ", " + 255 + "," + opacity + ")";
+            var color = "rgba(" + 47 + ", " + 200 + ", " + 114 + "," + opacity + ")";
             expression.push(row["name"], color);
         });
 
