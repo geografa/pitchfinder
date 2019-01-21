@@ -153,18 +153,12 @@ map.dragRotate.disable();
 // disable map rotation using touch rotation gesture
 map.touchZoomRotate.disableRotation();
 
-// Add geolocate control to the map.
-map.addControl(new mapboxgl.GeolocateControl({
-    positionOptions: {
-        enableHighAccuracy: true
-    },
-    trackUserLocation: false
-}));
-
 function forwardGeocoder(query) {
   var pitches = map.querySourceFeatures('portland-soccer-pitches', {
     sourceLayer: 'portland-soccer-pitches',
   });
+
+//   console.log(pitches);
 
   var matchingFeatures = []
   for (i=0; i<pitches.length; i++){
@@ -247,11 +241,11 @@ const getPitches = (callback) => {
 
         // add a layer to our map
         map.addLayer({
-            'id': 'portland-soccer-pitches', // the layer id
-            'type': 'circle', // the type of layer
-            'source': 'portland-soccer-pitches', // the source for the layer (we set it up above)
+            "id": "portland-soccer-pitches", // the layer id
+            "type": "circle", // the type of layer
+            "source": "portland-soccer-pitches", // the source for the layer (we set it up above)
             paint: {
-                'circle-radius': [
+                "circle-radius": [
                     "interpolate", ["linear"], ["zoom"],
                     // zoom is 5 (or less) -> circle radius will be 1px
                     10, 10,
@@ -260,22 +254,13 @@ const getPitches = (callback) => {
                 ],
                 // color circles by likes, using a match expression
                 // https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
-                // 'circle-color': [
-                //     'match',
-                //     ['get', 'likes'],
-                //     0, '#fbb03b',
-                //     1, '#223b53',
-                //     2, '#e55e5e',
-                //     3, '#3bb2d0',
-                //     /* other */ '#333'
-                // ],
-                'circle-color': expression,
-                // 'circle-stroke-color': '#000',
-                // 'circle-blur': 0.8
-                'circle-opacity': 0.9
+                "circle-color": expression,
+                // "circle-stroke-color": "#000",
+                // "circle-blur": 0.8
+                "circle-opacity": 0.9
             }
         });
-        
+        console.log(expression);
         map.addLayer({
                 "id": "portland-soccer-balls",
                 "type": "symbol",
