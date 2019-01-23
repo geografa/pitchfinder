@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -209,13 +210,13 @@ var dataset = 'https://api.mapbox.com/datasets/v1/grafa/cjblbqghw4k7x2yqfk7lmkq4
 
 var data = [
     {"name": "Grant Park", "likes": 0},
-    {"name": "Roosevelt HS", "likes": 10},
-    {"name": "Chapman ES", "likes": 8},
-    {"name": "King ES", "likes": 2},
+    {"name": "Roosevelt HS", "likes": 12},
+    {"name": "Chapman ES", "likes": 12},
+    {"name": "King ES", "likes": 6},
     {"name": "Rieke Field", "likes": 12},
-    {"name": "Wilson HS", "likes": 12},
+    {"name": "Rieke Field", "likes": 12},
     {"name": "Buckman Field", "likes": 12},
-    {"name": "Salvation Army Moore Street", "likes": 10},
+    {"name": "Salvation Army Moore Street", "likes": 12},
 ];
 
 const getPitches = (callback) => {
@@ -238,7 +239,7 @@ const getPitches = (callback) => {
         // Calculate color for each state based on the likes
         data.forEach(function(row) {
             var opacity = (row["likes"] / maxValue);
-            var color = "rgba(" + 47 + ", " + 114 + ", " + 255 + "," + opacity + ")";
+            var color = "rgba(" + 47 + ", " + 200 + ", " + 114 + "," + opacity + ")";
             expression.push(row["name"], color);
         });
 
