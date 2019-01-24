@@ -214,8 +214,10 @@ var data = [
     {"name": "Chapman ES", "likes": 12},
     {"name": "King ES", "likes": 6},
     {"name": "Rieke Field", "likes": 12},
-    {"name": "Buckman Field", "likes": 12},
+    {"name": "Buckman Field (South)", "likes": 12},
+    {"name": "Fernhill Park I", "likes": 12},
     {"name": "Salvation Army Moore Street", "likes": 12},
+    {"name": "Portland State University", "likes": 12}
 ];
 
 const getPitches = (callback) => {
@@ -312,7 +314,8 @@ map.on('load', function () {
 map.on('click', 'portland-soccer-pitches', function (e) {
     var coordinates = e.features[0].geometry.coordinates.slice();
     var name = e.features[0].properties.name;
-
+    var gameTimes = e.features[0].properties.desc;
+    console.log(gameTimes);
     var search = decodeURIComponent(window.location.hash.split('#')[1]);
     var pitch = 'https://pdx.futbol/#' + search;
 
@@ -322,10 +325,16 @@ map.on('click', 'portland-soccer-pitches', function (e) {
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
     coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
-
-    popup.setLngLat(coordinates)
+    if (gameTimes == null) {
+      popup.setLngLat(coordinates)
     .setHTML('<h2>' + name + '</h2>🚗 <a href="javascript:void(0)" onclick="getLocation(getRoute)";return false;>Directions</a><br>'+
-    '📝 <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Reference:%20'+ pitch + '">Suggest an edit</a>');
+      '📝 <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Reference:%20'+ pitch + '">Suggest an edit</a>');     
+    } else {
+      popup.setLngLat(coordinates)
+    .setHTML( '<h2>' + name + '</h2><h2>' + gameTimes + '</h2>  🚗 <a href="javascript:void(0)" onclick="getLocation(getRoute)";return false;>Directions</a><br>'+
+      '📝 <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Reference:%20'+ pitch + '">Suggest an edit</a>');
+    }
+    
     popup.addTo(map);
 });
 
