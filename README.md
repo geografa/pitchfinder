@@ -2,7 +2,7 @@
 Find a pickup game. Find a field.
 
 Looking for a pickup game or just trying to find your field? You can find a field, directions, and the time it will take to drive there. Search for a field or address.
-<img src="assets/search.gif" alt="search" class="img">
+![pitchfinder sample](assets/search.gif)
 
 Click the ⚽️ to get the field's name, pickup times (if available), directions, and drive time. 
 <img src="assets/directions.png" alt="directions" class="img">
@@ -21,6 +21,3 @@ I love the beautiful game. I also love <a href="https://www.mapbox.com/">maps</a
 Find me on <a href="https://twitter.com/geografa">Twitter</a> or at a pickup.
 ## Dev
 This site is open source and written in vanilla JavaScript and HTML. The map is made with <a href="https://www.mapbox.com/">Mapbox</a> and uses the <a href="https://www.mapbox.com/api-documentation/#directions">Directions API</a>. All fields are estimated from <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, a community-driven open source mapping project.
-
-![pitchfinder sample](assets/search.gif)
-
