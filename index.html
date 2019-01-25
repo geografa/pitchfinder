@@ -7,8 +7,15 @@
   <meta property="og:type"               content="place" />
   <meta property="og:title"              content="Find a local pickup game or field ⚽️ " />
   <meta property="og:description"        content="Get info on pickup games and field locations in and around Portland" />
-  <meta property="og:image"              content="https://pdx.futbol/assets/pitchfinder.jpg" />
+  <meta property="og:image"              content="https://pdx.futbol/assets/fb-preview.png" />
   <meta property="fb:app_id"             content="146253569362639" />
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@geografa">
+  <meta name="twitter:creator" content="@geografa">
+  <meta name="twitter:title" content="pdx.futbol">
+  <meta name="twitter:description" content="Get info on pickup games and field locations in and around Portland">
+  <meta name="twitter:image" content="https://pdx.futbol/assets/fb-preview.png">
 
   <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
@@ -132,7 +139,7 @@
 <div id='geocoder' class='geocoder'></div>
 <div id="info">
     <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Find%20local%20pickup%20game%20or%20find%20your%20field%20%E2%9A%BD%EF%B8%8F"></a>
-    <div class="fb-share-button" data-href="https://pdx.futbol/" data-layout="button_count"></div>
+    <div class="fb-share-button" data-href="https://pdx.futbol" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpdx.futbol%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
     <a href="about.html" class='about'><img src="./assets/Infobox_info_icon.svg" alt="about" height="20px"></a>
 </div>
 
@@ -473,13 +480,12 @@ document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
   
     return t;
   }(document, "script", "twitter-wjs"));</script>
-  <!-- Load Facebook SDK for JavaScript -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=146253569362639&autoLogAppEvents=1';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
