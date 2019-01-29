@@ -292,16 +292,15 @@ const getPitches = (callback) => {
                         "data": pitches
                 },
                 "layout": {
-                    "icon-image": "soccer-ball",
-                    "icon-size": [
+                  "icon-image": "soccer-ball",
+                  "icon-size": [
                     "interpolate", ["linear"], ["zoom"],
-                    // zoom is 5 (or less) -> circle radius will be 1px
-                    10, 0.1,
-                    // zoom is 10 (or greater) -> circle radius will be 5px
-                    15, 0.25
-                ],
-                    "icon-allow-overlap": true,
-                    "text-field": "{likes}"
+                    8, 0.1,
+                    11, 0.2,
+                    15, 0.3
+                  ],
+                  "icon-allow-overlap": true,
+                  "text-field": "{likes}"
                 },
         });
 	};
@@ -354,7 +353,7 @@ const getLocation = (callback) => {
 
 const getRoute = (startLon,startLat,dest) => {
   var dest = popup.getLngLat();
-  var url = 'https://api.mapbox.com/directions/v5/mapbox/driving-traffic/' + startLon + ',' + startLat + ';' + dest.lng + ',' + dest.lat +
+  var url = 'https://api.mapbox.com/directions/v5/mapbox/cycling/' + startLon + ',' + startLat + ';' + dest.lng + ',' + dest.lat +
   '?geometries=geojson&overview=full&access_token=pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2pjeG40N3cyMTZ6ajMzbzUwNHFleWRsMiJ9.n1yXQ4YMRi9ylrhaeah5dA';
   var req = new XMLHttpRequest();
   req.responseType = 'json';
@@ -439,7 +438,7 @@ const getRoute = (startLon,startLat,dest) => {
     });
 
     popup.setLngLat([startLon,startLat])
-      .setHTML('<span class="duration">' + Math.floor(data.duration/60) + ' min 🚗💨</span>');
+      .setHTML('<span class="duration">' + Math.floor(data.duration/60) + ' min 🚴‍♂️💨</span>');
     popup.addTo(map);
   };
   req.send();
