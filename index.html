@@ -353,7 +353,7 @@ const getLocation = (callback) => {
 
 const getRoute = (startLon,startLat,dest) => {
   var dest = popup.getLngLat();
-  var url = 'https://api.mapbox.com/directions/v5/mapbox/cycling/' + startLon + ',' + startLat + ';' + dest.lng + ',' + dest.lat +
+  var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + startLon + ',' + startLat + ';' + dest.lng + ',' + dest.lat +
   '?geometries=geojson&overview=full&access_token=pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2pjeG40N3cyMTZ6ajMzbzUwNHFleWRsMiJ9.n1yXQ4YMRi9ylrhaeah5dA';
   var req = new XMLHttpRequest();
   req.responseType = 'json';
@@ -438,7 +438,7 @@ const getRoute = (startLon,startLat,dest) => {
     });
 
     popup.setLngLat([startLon,startLat])
-      .setHTML('<span class="duration">' + Math.floor(data.duration/60) + ' min 🚴‍♂️💨</span>');
+      .setHTML('<span class="duration">' + Math.floor(data.duration/60) + ' min 🚗💨</span>');
     popup.addTo(map);
   };
   req.send();
