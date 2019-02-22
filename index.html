@@ -127,7 +127,6 @@
 		.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
 			border-top-color: rgba(0, 30, 84, 0.78);
     }
-
   </style>
 </head>
 <body>
@@ -139,12 +138,13 @@
 <div id='geocoder' class='geocoder'></div>
 <div id="info">
     <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Find%20local%20pickup%20game%20or%20find%20your%20field%20%E2%9A%BD%EF%B8%8F"></a>
-    <div class="fb-share-button" data-href="https://pdx.futbol" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpdx.futbol%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+    <div class="fb-share-button" data-href="https://pdx.futbol/" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpdx.futbol%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
     <a href="about.html" class='about'><img src="./assets/Infobox_info_icon.svg" alt="about" height="20px"></a>
 </div>
 
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2pjeG40N3cyMTZ6ajMzbzUwNHFleWRsMiJ9.n1yXQ4YMRi9ylrhaeah5dA';
+
 var map = new mapboxgl.Map({
   container: 'map',
 //   style: 'mapbox://styles/grafa/cj23ol2ed000u2rr25s4yv3s5', // portland pitches
@@ -174,19 +174,21 @@ function forwardGeocoder(query) {
     sourceLayer: 'portland-soccer-pitches',
   });
 
-  var matchingFeatures = []
-  for (i=0; i<pitches.length; i++){
-    var feature = pitches[i]
-    query.toLowerCase();
-    if (feature.properties.name.toLowerCase().search(query.toLowerCase()) !== -1) {
-    // if (feature.properties.name.search(query) !== -1){
-      feature['place_name']= '⚽️ ' + feature.properties.name
-      feature['center'] = feature.geometry.coordinates
-      // feature['place_type'] = ['park']
-      matchingFeatures.push(feature);
+  if (pitches) {
+    // only list unique features from vector tiles
+    var uniqueFeatures = getUniqueFeatures(pitches, "name");
+    var matchingFeatures = []
+    for (i=0; i<uniqueFeatures.length; i++){
+      var feature = uniqueFeatures[i]
+      query.toLowerCase();
+      if (feature.properties.name.toLowerCase().search(query.toLowerCase()) !== -1) {
+        feature['place_name']= '⚽️ ' + feature.properties.name
+        feature['center'] = feature.geometry.coordinates
+        matchingFeatures.push(feature);
+      }
     }
+    return matchingFeatures;
   }
-  return matchingFeatures;
 };
 
 var geocoder = new MapboxGeocoder({
@@ -196,6 +198,22 @@ var geocoder = new MapboxGeocoder({
   bbox: [-124.0380626758699,45.2412126235823,-121.10311165853054,45.81306995608375],
   placeholder: "e.g Grant HS"
 });
+
+function getUniqueFeatures(array, comparatorProperty) {
+    var existingFeatureKeys = {};
+    // Because features come from tiled vector data, feature geometries may be split
+    // or duplicated across tile boundaries and, as a result, features may appear
+    // multiple times in query results.
+    var uniqueFeatures = array.filter(function(el) {
+        if (existingFeatureKeys[el.properties[comparatorProperty]]) {
+            return false;
+        } else {
+            existingFeatureKeys[el.properties[comparatorProperty]] = true;
+            return true;
+        }
+    });
+    return uniqueFeatures;
+}
 
 var markerHeight = 20, markerRadius = 10, linearOffset = 25;
 var popupOffsets = {
@@ -213,7 +231,7 @@ var popup = new mapboxgl.Popup({
   offset: popupOffsets
 });
 
-var dataset = 'https://api.mapbox.com/datasets/v1/grafa/cjblbqghw4k7x2yqfk7lmkq4u/features?access_token=pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2pjeG40N3cyMTZ6ajMzbzUwNHFleWRsMiJ9.n1yXQ4YMRi9ylrhaeah5dA';
+var dataset = 'https://api.mapbox.com/datasets/v1/grafa/cjblbqghw4k7x2yqfk7lmkq4u/features?access_token=' + mapboxgl.accessToken;
 
 var data = [
     {"name": "Grant Park", "likes": 0},
@@ -320,7 +338,6 @@ map.on('click', 'portland-soccer-pitches', function (e) {
     var coordinates = e.features[0].geometry.coordinates.slice();
     var name = e.features[0].properties.name;
     var gameTimes = e.features[0].properties.desc;
-    console.log(gameTimes);
     var search = decodeURIComponent(window.location.hash.split('#')[1]);
     var pitch = 'https://pdx.futbol/#' + search;
 
@@ -354,7 +371,7 @@ const getLocation = (callback) => {
 const getRoute = (startLon,startLat,dest) => {
   var dest = popup.getLngLat();
   var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + startLon + ',' + startLat + ';' + dest.lng + ',' + dest.lat +
-  '?geometries=geojson&overview=full&access_token=pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2pjeG40N3cyMTZ6ajMzbzUwNHFleWRsMiJ9.n1yXQ4YMRi9ylrhaeah5dA';
+  '?geometries=geojson&overview=full&access_token=' + mapboxgl.accessToken;
   var req = new XMLHttpRequest();
   req.responseType = 'json';
   req.open('GET', url, true);
