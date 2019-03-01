@@ -3,8 +3,8 @@ body { margin:0; padding:0; }
     position:absolute; 
     top:165px; 
     bottom:0; 
-    width:100%; 
-    border-top: 1mm ridge rgb(45, 194, 65);
+    width:100%;
+    border-top: 1mm ridge rgb(0, 209, 117);
 }
 #info {
     width:50%; 
