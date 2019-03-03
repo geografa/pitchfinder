@@ -67,7 +67,7 @@ body { margin:0; padding:0; background: #1b6336}
     width:50%;
     left:50%;
     margin-left:-25%;
-    top:38px;
+    top:35px;
 }
 .mapboxgl-ctrl-geocoder { min-width:100%; }
 .duration {
@@ -113,7 +113,7 @@ body { margin:0; padding:0; background: #1b6336}
 }
 @media screen and (max-width: 480px) {
     #info {
-        width:58%; 
+        width:62%; 
     }
     .geocoder {
         width: 50%;
