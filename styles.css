@@ -1,10 +1,10 @@
-body { margin:0; padding:0; }
+body { margin:0; padding:0; background: #1b6336}
 #map { 
     position:absolute; 
     top:165px; 
     bottom:0; 
     width:100%;
-    border-top: 1mm ridge rgb(0, 209, 117);
+    border-top: 1mm ridge #c6ff00;
 }
 #info {
     width:50%; 
@@ -23,6 +23,10 @@ body { margin:0; padding:0; }
     position: relative;
     vertical-align: middle;
 }
+#twitter-widget-0 {
+    display: inline-block;
+    vertical-align: middle;
+}
 #fit_button {
     display: inline-block;
     position: relative;
@@ -30,34 +34,32 @@ body { margin:0; padding:0; }
     background-color: #2fc872; /* Green */
     border: none;
     color: white;
-    padding: 4px 6px;
+    padding: 2px 6px;
     text-align: center;
     text-decoration: none;
     font-size: 10px;
     font-weight: bold;
     border-radius: 3px;
     cursor: pointer;
-    }
-#twitter-widget-0 {
-    display: inline-block;
-    vertical-align: middle;
+    height: 20px;
 }
 #heading {
     text-align: center;      
 }
 .title {
     font-family: 'Monoton', cursive;
-    font-size: 2em;
+    font-size: 2.1em;
     margin-bottom: 0;
 }
 .title a {
     text-decoration: none;
-    color: #333;
+    color: #d4ff00;
 }
 .subtitle {
     margin-top: 0;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.08em;
+    color: #ddd;
 }
 .geocoder {
     position: relative;;

@@ -35,7 +35,7 @@
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
-  <title>PDX.FUTBOL | Find a local pickup game or field ⚽️ </title>
+  <title>PDX.FUTBOL | Find a field or local pickup game ⚽️ </title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
@@ -48,12 +48,12 @@
 <div id='map'></div>
 <div id='heading'>
   <p class='title'><a href="about.html">PDX.FUTBOL</a></p>
-  <p class='subtitle'>find a pickup game. find a field.</p>
+  <p class='subtitle'>Find a field. Find a pickup game.</p>
   <a href="about.html" class='about'><img src="./assets/ref.png" alt="about"></a>
   <div id="info">
     <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I'm%20going%20to%20this%20game%20%E2%9A%BD%EF%B8%8F"></a>
     <div class="fb-share-button" data-href="https://pdx.futbol/" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpdx.futbol%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"></a></div>
-    <button id="fit_button">All fields</button>
+    <button id="fit_button">⚽️All fields</button>
   </div>
 </div>
 
@@ -190,7 +190,7 @@ const getPitches = (callback) => {
         // Calculate color for each state based on the likes
         data.forEach(function(row) {
             var opacity = (row["likes"] / maxValue);
-            var color = "rgba(" + 47 + ", " + 200 + ", " + 114 + "," + opacity + ")";
+            var color = "rgba(" + 47 + ", " + 160 + ", " + 114 + "," + opacity + ")";
             expression.push(row["name"], color);
         });
 
