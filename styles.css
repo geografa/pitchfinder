@@ -67,7 +67,7 @@ body { margin:0; padding:0; background: #1b6336}
     width:50%;
     left:50%;
     margin-left:-25%;
-    top:35px;
+    top:80px;
 }
 .mapboxgl-ctrl-geocoder { min-width:100%; }
 .duration {
@@ -81,10 +81,10 @@ body { margin:0; padding:0; background: #1b6336}
 }
 .mapboxgl-popup-content a {
     color: #ffffff;
-    font-size: 1.2em;
+    /* font-size: 1.2em; */
     line-height: 2em;
 }
-.mapboxgl-popup-content h2  {
+.mapboxgl-popup-content h2, p  {
     margin: 5px;
 }
 .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
