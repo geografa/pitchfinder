@@ -41,6 +41,9 @@
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
   <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
   <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.css' type='text/css' />
+  <!-- include firebase -->
+  <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
   <link rel='stylesheet' href='styles.css' type='text/css' />
   <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
 </head>
@@ -155,7 +158,30 @@ var popup = new mapboxgl.Popup({
   offset: popupOffsets
 });
 
-var dataset = 'https://api.mapbox.com/datasets/v1/grafa/cjblbqghw4k7x2yqfk7lmkq4u/features?access_token=' + mapboxgl.accessToken;
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyCHXst0VonXAtT1uGKEVFZOvYYkw1oae2E",
+    authDomain: "pickup-97212.firebaseapp.com",
+    databaseURL: "https://pickup-97212.firebaseio.com",
+    projectId: "pickup-97212",
+    storageBucket: "pickup-97212.appspot.com",
+    messagingSenderId: "860327677665"
+};
+firebase.initializeApp(config);
+
+var ref = firebase.database().ref("pitches");
+
+function getFire(callback) {
+  ref.once("value")
+  .then(function(snapshot) {
+      var name = snapshot.val(); // the full GeoJSON FeatuerCollection
+      console.log(name);
+      callback(name);
+      // return name;
+  });
+}
+
+// var dataset = 'https://api.mapbox.com/datasets/v1/grafa/cjblbqghw4k7x2yqfk7lmkq4u/features?access_token=' + mapboxgl.accessToken;
 
 var data = [
     {"name": "Grant Park", "likes": 0},
@@ -171,13 +197,14 @@ var data = [
     {"name": "Portland State University", "likes": 12}
 ];
 
-const getPitches = (callback) => {
-	// add the dataset as GeoJSON 
+const getPitches = (name) => {
+  // add the dataset as GeoJSON 
 	var req = new XMLHttpRequest();
 	req.responseType = 'json';
-	req.open('GET', dataset, true);
+	req.open('GET', name, true);
 	req.onload  = function() {
         var pitches = req.response;
+        // console.log(pitches);
         map.addSource('portland-soccer-pitches', {
             "type": "geojson",
             "data": pitches,
@@ -248,7 +275,7 @@ const getPitches = (callback) => {
                   "text-field": "{likes}"
                 },
         });
-	};
+  };
 	req.send();
 }
 
@@ -256,7 +283,7 @@ map.on('load', function () {
 	// keep portland specific?
   // var bounds = [[-123.71335832252835,45.25971894392549],[-121.65150609073802,45.79798892888519]];
   // map.setMaxBounds(bounds);
-	getPitches();
+  getFire(getPitches)
 });
 
 // When a click event occurs on a feature in the portland-soccer-pitches layer, open a popup at the
