@@ -37,6 +37,7 @@
 
   <title>PDX.FUTBOL | Find a field or local pickup game ⚽️ </title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <!-- Mapbox -->
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
   <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.2.0/mapbox-gl-geocoder.min.js'></script>
@@ -44,6 +45,7 @@
   <!-- include firebase -->
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+  <!-- other -->
   <link rel='stylesheet' href='styles.css' type='text/css' />
   <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
 </head>
@@ -67,20 +69,15 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2pjeG40N3cyMTZ6ajMzbzUwNHFle
 
 var map = new mapboxgl.Map({
   container: 'map',
-//   style: 'mapbox://styles/grafa/cj23ol2ed000u2rr25s4yv3s5', // portland pitches
   style: 'mapbox://styles/grafa/cjqujk8ytctei2smjw6bhlzrc',  // portland pitches light
-  // style: 'mapbox://styles/mapbox/streets-v9',
   center: [-122.67773866653444,45.52245801087795],
   zoom: 11,
-//   pitch: 35.5,
   hash: true
 });
+
 // disable map rotation using right click + drag
 map.dragRotate.disable();
-
-
 var bounds= [[-123.01347209011462,45.354153225266714],[-122.27773296336804,45.705467143622116]];
-
 document.getElementById('fit_button').addEventListener('click', function() {
   map.fitBounds(bounds);
 });
@@ -95,6 +92,15 @@ map.addControl(new mapboxgl.GeolocateControl({
     },
     trackUserLocation: false
 }), 'top-right');
+
+// geocoder
+var geocoder = new MapboxGeocoder({
+	accessToken: mapboxgl.accessToken,
+  localGeocoder: forwardGeocoder,
+  zoom: 17,
+  bbox: [-124.0380626758699,45.2412126235823,-121.10311165853054,45.81306995608375],
+  placeholder: "e.g Grant HS"
+});
 
 function forwardGeocoder(query) {
   var pitches = map.querySourceFeatures('portland-soccer-pitches', {
@@ -118,14 +124,6 @@ function forwardGeocoder(query) {
   }
 };
 
-var geocoder = new MapboxGeocoder({
-	accessToken: mapboxgl.accessToken,
-  localGeocoder: forwardGeocoder,
-  zoom: 17,
-  bbox: [-124.0380626758699,45.2412126235823,-121.10311165853054,45.81306995608375],
-  placeholder: "e.g Grant HS"
-});
-
 function getUniqueFeatures(array, comparatorProperty) {
     var existingFeatureKeys = {};
     // Because features come from tiled vector data, feature geometries may be split
@@ -142,6 +140,7 @@ function getUniqueFeatures(array, comparatorProperty) {
     return uniqueFeatures;
 }
 
+// popup
 var markerHeight = 20, markerRadius = 10, linearOffset = 25;
 var popupOffsets = {
  'top': [0, 0],
@@ -158,7 +157,7 @@ var popup = new mapboxgl.Popup({
   offset: popupOffsets
 });
 
-// Initialize Firebase
+// Firebase
 var config = {
     apiKey: "AIzaSyCHXst0VonXAtT1uGKEVFZOvYYkw1oae2E",
     authDomain: "pickup-97212.firebaseapp.com",
@@ -174,124 +173,93 @@ var ref = firebase.database().ref("pitches");
 function getFire(callback) {
   ref.once("value")
   .then(function(snapshot) {
-      var name = snapshot.val(); // the full GeoJSON FeatuerCollection
-      console.log(name);
-      callback(name);
-      // return name;
+      var pitches = snapshot.val(); // the full GeoJSON FeatuerCollection
+      callback(pitches);
   });
 }
 
-// var dataset = 'https://api.mapbox.com/datasets/v1/grafa/cjblbqghw4k7x2yqfk7lmkq4u/features?access_token=' + mapboxgl.accessToken;
+function addFire(name) {
+  var query = firebase.database().ref("pitches/features").orderByKey();
+  query.once("value")
+    .then(function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        // key will be "ada" the first time and "alan" the second time
+        var key = childSnapshot.key;
+        // childData will be the actual contents of the child
+        var childData = childSnapshot.val();
+    });
+  });
+}
 
-var data = [
-    {"name": "Grant Park", "likes": 0},
-    {"name": "Roosevelt HS", "likes": 12},
-    {"name": "Chapman ES", "likes": 12},
-    {"name": "Rieke Field", "likes": 12},
-    {"name": "Irving Park", "likes": 12},
-    {"name": "Buckman Field (South)", "likes": 12},
-    {"name": "Fernhill Park I", "likes": 12},
-    {"name": "Salvation Army Moore Street", "likes": 12},
-    {"name": "Lake Oswego HS", "likes": 12},
-    {"name": "Westmoreland Park", "likes": 12},
-    {"name": "Portland State University", "likes": 12}
-];
+const getPitches = (pitches) => {
+  map.addSource('portland-soccer-pitches', {
+      "type": "geojson",
+      "data": pitches
+  });
 
-const getPitches = (name) => {
-  // add the dataset as GeoJSON 
-	var req = new XMLHttpRequest();
-	req.responseType = 'json';
-	req.open('GET', name, true);
-	req.onload  = function() {
-        var pitches = req.response;
-        // console.log(pitches);
-        map.addSource('portland-soccer-pitches', {
-            "type": "geojson",
-            "data": pitches,
-            'generateId': true // this ensure that all features have unique ids
-        });
-
-        var maxValue = 10;
-
-        var expression = ["match", ["get", "name"]];
-
-        // Calculate color for each state based on the likes
-        data.forEach(function(row) {
-            var opacity = (row["likes"] / maxValue);
-            var color = "rgba(" + 47 + ", " + 160 + ", " + 114 + "," + opacity + ")";
-            expression.push(row["name"], color);
-        });
-
-        // Last value is the default, used where there is no data
-        expression.push("rgba(255,246,0,0)");
-
-        // add a layer to our map
-        map.addLayer({
-            'id': 'portland-soccer-pitches', // the layer id
-            'type': 'circle', // the type of layer
-            'source': 'portland-soccer-pitches', // the source for the layer (we set it up above)
-            paint: {
-                'circle-radius': [
-                    "interpolate", ["linear"], ["zoom"],
-                    // zoom is 5 (or less) -> circle radius will be 1px
-                    10, 10,
-                    // zoom is 10 (or greater) -> circle radius will be 5px
-                    15, 25
-                ],
-                // color circles by likes, using a match expression
-                // https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
-                // 'circle-color': [
-                //     'match',
-                //     ['get', 'likes'],
-                //     0, '#fbb03b',
-                //     1, '#223b53',
-                //     2, '#e55e5e',
-                //     3, '#3bb2d0',
-                //     /* other */ '#333'
-                // ],
-                'circle-color': expression,
-                // 'circle-stroke-color': '#000',
-                // 'circle-blur': 0.8
-                'circle-opacity': 0.9
-            }
-        });
+  map.addLayer({
+      'id': 'portland-soccer-pitches', // the layer id
+      'type': 'circle', // the type of layer
+      'source': 'portland-soccer-pitches', // the source for the layer (we set it up above)
+      paint: {
+          'circle-radius': [
+              "interpolate", ["linear"], ["zoom"],
+              // zoom is 5 (or less) -> circle radius will be 1px
+              10, 10,
+              // zoom is 10 (or greater) -> circle radius will be 5px
+              15, 25
+          ],
+          // color circles by likes, using a match expression
+          // https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
+          'circle-color': [
+              'match',
+              ['get', 'likes'],
+              6, 'rgba(27,99,54,0.4)',
+              7, 'rgba(27,99,54,0.5)',
+              8, 'rgba(27,99,54,0.6)',
+              9, 'rgba(27,99,54,0.7)',
+              10, 'rgba(27,99,54,0.8)',
+              11, 'rgba(27,99,54,0.9)',
+              12, 'rgba(27,99,54,1)',
+              /* other */ 'rgba(27,99,54,0)'
+          ],
+          'circle-opacity': 0.9
+      }
+  });
         
-        map.addLayer({
-                "id": "portland-soccer-balls",
-                "type": "symbol",
-                "source": {
-                        "type": "geojson",
-                        "data": pitches
-                },
-                "layout": {
-                  "icon-image": "soccer-ball",
-                  "icon-size": [
-                    "interpolate", ["linear"], ["zoom"],
-                    8, 0.1,
-                    11, 0.2,
-                    15, 0.3
-                  ],
-                  "icon-allow-overlap": true,
-                  "text-field": "{likes}"
-                },
-        });
-  };
-	req.send();
+  map.addLayer({
+    "id": "portland-soccer-balls",
+    "type": "symbol",
+    "source": 'portland-soccer-pitches',
+    "layout": {
+      "icon-image": "soccer-ball",
+      "icon-size": [
+        "interpolate", ["linear"], ["zoom"],
+        8, 0.1,
+        11, 0.2,
+        15, 0.3
+      ],
+      "icon-allow-overlap": true,
+      // "text-field": "{likes}"
+    },
+  });
+  ref.on('value', function(dataSnapshot) {
+    map.getSource('portland-soccer-pitches').setData(dataSnapshot.val());
+  });
 }
 
 map.on('load', function () {
-	// keep portland specific?
-  // var bounds = [[-123.71335832252835,45.25971894392549],[-121.65150609073802,45.79798892888519]];
-  // map.setMaxBounds(bounds);
   getFire(getPitches)
 });
 
 // When a click event occurs on a feature in the portland-soccer-pitches layer, open a popup at the
 // location of the feature, with description HTML from its properties.
 map.on('click', 'portland-soccer-pitches', function (e) {
-    var coordinates = e.features[0].geometry.coordinates.slice();
-    var name = e.features[0].properties.name;
-    var gameTimes = e.features[0].properties.desc;
+    var feature = e.features[0];
+    var coordinates = feature.geometry.coordinates.slice();
+    var name = feature.properties.name;
+    var gameTimes = feature.properties.desc;
+    var likes = feature.properties.likes;
     var search = decodeURIComponent(window.location.hash.split('#')[1]);
     var pitch = 'https://pdx.futbol/#' + search;
 
@@ -307,12 +275,30 @@ map.on('click', 'portland-soccer-pitches', function (e) {
       '📝 <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Reference:%20'+ pitch + '">Suggest an edit</a>');
     } else {
       popup.setLngLat(coordinates)
-    .setHTML( '<h2>' + name + '</h2><p>' + gameTimes + '</p>🚗 <a href="javascript:void(0)" onclick="getLocation(getRoute)";return false;>Directions</a><br>'+
+    .setHTML( '<h2>' + name + '</h2><p>' + gameTimes + '</p><div class="can-toggle can-toggle--size-small heart">' +
+              '<input id="going" name="checkbox" type="checkbox"><label for="going"><div class="can-toggle__switch" data-checked="✅" data-unchecked="☑️"></div>' +
+              '<p id="likes">' + likes + '</p></label></div>🚗 <a href="javascript:void(0)" onclick="getLocation(getRoute)";return false;>Directions</a><br>'+
       '📝 <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.%20Reference:%20'+ pitch + '">Suggest an edit</a>');
     };    
     popup.addTo(map);
-});
 
+    var checkbox = document.querySelector('input[name=checkbox]');
+    if (checkbox) {
+      checkbox.addEventListener( 'change', function() {
+        if(this.checked) {
+          addFire(253,likes+1)
+          document.getElementById('likes').innerHTML = likes + 1;
+          console.log('checked');
+        } else {
+          addFire(253,likes-1)
+          document.getElementById('likes').innerHTML = likes - 1;
+        }
+      });
+    } else {
+      return;
+    };
+});
+    
 const getLocation = (callback) => {
   navigator.geolocation.getCurrentPosition(function(position) {
     let startLon = position.coords.longitude;
