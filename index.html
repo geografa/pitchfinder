@@ -75,6 +75,10 @@ var map = new mapboxgl.Map({
   hash: true
 });
 
+map.on('load', function () {
+  getFire(getPitches)
+});
+
 // disable map rotation using right click + drag
 map.dragRotate.disable();
 var bounds= [[-123.01347209011462,45.354153225266714],[-122.27773296336804,45.705467143622116]];
@@ -178,7 +182,12 @@ function getFire(callback) {
   });
 }
 
-function addFire(name) {
+// var adaNameRef = firebase.database().ref('users/ada/name');
+// adaNameRef.child('first').set('Ada');
+// adaNameRef.child('last').set('Lovelace');
+
+
+function addFire(name,likes) {
   var query = firebase.database().ref("pitches/features").orderByKey();
   query.once("value")
     .then(function(snapshot) {
@@ -187,6 +196,12 @@ function addFire(name) {
         var key = childSnapshot.key;
         // childData will be the actual contents of the child
         var childData = childSnapshot.val();
+        if (name == childData.properties.name) {
+          console.log(name,likes);
+          ref.child('features/' + key + '/properties/likes').set(likes);
+          console.log(key);
+        }
+        // console.log(childData);
     });
   });
 }
@@ -248,10 +263,6 @@ const getPitches = (pitches) => {
   });
 }
 
-map.on('load', function () {
-  getFire(getPitches)
-});
-
 // When a click event occurs on a feature in the portland-soccer-pitches layer, open a popup at the
 // location of the feature, with description HTML from its properties.
 map.on('click', 'portland-soccer-pitches', function (e) {
@@ -286,12 +297,12 @@ map.on('click', 'portland-soccer-pitches', function (e) {
     if (checkbox) {
       checkbox.addEventListener( 'change', function() {
         if(this.checked) {
-          addFire(253,likes+1)
-          document.getElementById('likes').innerHTML = likes + 1;
+          document.getElementById('likes').innerHTML = likes+1;
+          addFire(name,likes+1);
           console.log('checked');
         } else {
-          addFire(253,likes-1)
-          document.getElementById('likes').innerHTML = likes - 1;
+          document.getElementById('likes').innerHTML = likes;
+          addFire(name,likes);
         }
       });
     } else {
@@ -299,6 +310,7 @@ map.on('click', 'portland-soccer-pitches', function (e) {
     };
 });
     
+// geolocation
 const getLocation = (callback) => {
   navigator.geolocation.getCurrentPosition(function(position) {
     let startLon = position.coords.longitude;
@@ -307,6 +319,7 @@ const getLocation = (callback) => {
   });
 };
 
+// directions
 const getRoute = (startLon,startLat,dest) => {
   var dest = popup.getLngLat();
   var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + startLon + ',' + startLat + ';' + dest.lng + ',' + dest.lat +
