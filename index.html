@@ -299,7 +299,6 @@ map.on('click', 'portland-soccer-pitches', function (e) {
         if(this.checked) {
           document.getElementById('likes').innerHTML = likes+1;
           addFire(name,likes+1);
-          console.log('checked');
         } else {
           document.getElementById('likes').innerHTML = likes;
           addFire(name,likes);
