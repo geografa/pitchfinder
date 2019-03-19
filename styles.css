@@ -1,7 +1,7 @@
 body { margin:0; padding:0; background: #1b6336}
 #map { 
     position:absolute; 
-    top:165px; 
+    top:125px; 
     bottom:0; 
     width:100%;
     border-top: 1mm ridge #c6ff00;
@@ -11,7 +11,7 @@ body { margin:0; padding:0; background: #1b6336}
     margin:auto;
 }
 .about {
-    top: 125px;
+    top: 85px;
     position: absolute;
     left: 0;
 }
@@ -67,7 +67,7 @@ body { margin:0; padding:0; background: #1b6336}
     width:50%;
     left:50%;
     margin-left:-25%;
-    top:80px;
+    top:40px;
 }
 .mapboxgl-ctrl-geocoder { min-width:100%; }
 .duration {

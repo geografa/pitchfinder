@@ -8,11 +8,11 @@
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="./main.css" /> -->
     <!-- <script src="main.js"></script> -->
     <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
-
     <style>
         body { margin:0; padding:0; }
         #heading {
-            text-align: center;  
+            text-align: center;
+            margin-bottom: 40px;
         }
         #heading a {
             text-decoration: none;
@@ -20,7 +20,7 @@
         }
         .title {
             font-family: 'Monoton', cursive;
-            font-size: 1.4em;
+            font-size: 1.8em;
             margin-bottom: 0;
         }
         .txt {
@@ -35,45 +35,54 @@
         }
         .img {
             max-width: 100%;
+            margin: auto;
         }
         .imgThumb {
             max-width: 10%;
         }
+
+        /* mobile */
+        @media screen and (max-width: 480px) {
+            .txt {
+                width: 80%;
+            }
+        }
     </style>
 </head>
 <body>
-    <div id='heading'><p class='title'><a href="index.html">PDX.FUTBOL</a></p></div>
-
+    <div id='heading'>
+        <h2 class='title'><a href="index.html">PDX.FUTBOL</a></h2>
+        <h3 class="txt">Find a field or local pickup game ⚽️ </h3>
+    </div>
     <div class='txt'>
+            <h3>Find Fields</h3>
         <p>
             Looking for a pickup game or just trying to find your field? 
-            Use this site to find your field, directions, and the time it will take 
-            to drive there. Search for a field or address.
-        <p>
+            Search by address or field name. Don't see your field or want to make a suggestion? 
+            <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.">Email</a> your suggestion 
+            or edit for a specific location.
+        </p>
         <img src="assets/search.gif" alt="search" class="img">
+        <h3>Get Directions</h3>
         <p>
             Click the ⚽️ to get the field's name, pickup times (if available), 
             directions, and drive time. 
         </p>
-        <img src="assets/directions.png" alt="directions" class="img">
-        <p>    
-            Fields with green circles are pickup game locations according to the 
-            <a href="https://www.facebook.com/groups/PortlandPickUpSoccerers/">
-            Portland Pickup Facebook Group</a>. Check the group(s) for up to 
-            date activities.
-        </p>
-        <img src="assets/moore.png" alt="moore street example" class="img">
+        <img src="assets/directions.gif" alt="directions" class="img">
+        <h3>Going?</h3>
         <p>
-            Don't see your field or want to make a suggestion? 
-            <a href="mailto:soundofrafa@gmail.com?subject=Reporting%20Pitchfinder%20location&body=Please%20report%20a%20missing%20location,%20location%20edit,%20or%20type-o.">Email</a> your suggestion 
-            or edit for a specific location.
-        </p>
-        
+                Highlighted fields are pickup games, up to date with other postings 
+                from the 
+                <a href="https://www.facebook.com/groups/PortlandPickUpSoccerers/">
+                Portland Pickup Facebook Group</a> and word of mouth. 
+                Check the group(s) for up to date activities.
+            </p>
+        <img src="assets/going.gif" alt="going" class="img">
         <h3>Who</h3>
         <img src="assets/rafa.jpg" alt="rafa" class="img">
         <p>
             I love the beautiful game. I also love <a href="https://www.mapbox.com/">maps</a>.
-            Find pdxfutbol on <a href="https://twitter.com/pdxfutbol">
+            Find @pdxfutbol on <a href="https://twitter.com/pdxfutbol">
             Twitter</a> or <a href="https://twitter.com/geografa">me</a> at a pickup.
         </p>
         
@@ -86,7 +95,6 @@
             <a href="https://www.mapbox.com/api-documentation/#directions">
             Directions API</a>. All fields are estimated from 
             <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, a community-driven open source mapping project.
-
         </p>
         <p>© 2019 Rafa Gutierrez</p>
 
