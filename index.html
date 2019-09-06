@@ -3,19 +3,19 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <meta property="og:url"                content="https://pdx.futbol/" />
+  <meta property="og:url"                content="https://pdxpickupsoccer.com/" />
   <meta property="og:type"               content="place" />
   <meta property="og:title"              content="Find a local pickup game or field ⚽️ " />
   <meta property="og:description"        content="Get info on pickup games and field locations in and around Portland" />
-  <meta property="og:image"              content="https://pdx.futbol/assets/fb-preview.png" />
+  <meta property="og:image"              content="https://pdxpickupsoccer.com/assets/fb-preview.png" />
   <meta property="fb:app_id"             content="146253569362639" />
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@geografa">
   <meta name="twitter:creator" content="@geografa">
-  <meta name="twitter:title" content="pdx.futbol">
+  <meta name="twitter:title" content="pdxpickupsoccer.com">
   <meta name="twitter:description" content="Get info on pickup games and field locations in and around Portland">
-  <meta name="twitter:image" content="https://pdx.futbol/assets/fb-preview.png">
+  <meta name="twitter:image" content="https://pdxpickupsoccer.com/assets/fb-preview.png">
 
   <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
@@ -35,7 +35,7 @@
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
 
-  <title>PDX.FUTBOL | Find a field or local pickup game ⚽️ </title>
+  <title>PDX PICKUP SOCCER | Find a field or local pickup game ⚽️ </title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <!-- Mapbox -->
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
@@ -52,12 +52,12 @@
 <body>
 <div id='map'></div>
 <div id='heading'>
-  <p class='title'><a href="about.html">PDX.FUTBOL</a></p>
+  <p class='title'><a href="about.html">PDX Pickup Soccer</a></p>
   <p class='subtitle'>Find a field. Find a pickup game.</p>
   <a href="about.html" class='about'><img src="./assets/ref.png" alt="about"></a>
   <div id="info">
     <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I'm%20going%20to%20this%20game%20%E2%9A%BD%EF%B8%8F"></a>
-    <div class="fb-share-button" data-href="https://pdx.futbol/" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpdx.futbol%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"></a></div>
+    <div class="fb-share-button" data-href="https://pdxpickupsoccer.com/" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpdxpickupsoccer.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"></a></div>
     <button id="fit_button">⚽️All fields</button>
   </div>
 </div>
@@ -272,7 +272,7 @@ map.on('click', 'portland-soccer-pitches', function (e) {
     var gameTimes = feature.properties.desc;
     var likes = feature.properties.likes;
     var search = decodeURIComponent(window.location.hash.split('#')[1]);
-    var pitch = 'https://pdx.futbol/#' + search;
+    var pitch = 'https://pdxpickupsoccer.com/#' + search;
 
     // Ensure that if the map is zoomed out such that multiple
     // copies of the feature are visible, the popup appears
@@ -425,7 +425,7 @@ map.on('mouseleave', 'portland-soccer-pitches', function () {
 // used for suggesting an edit
 map.on('moveend', function () {
   var search = decodeURIComponent(window.location.hash.split('#')[1]);
-  var pitch = 'https://pdx.futbol/#' + search;
+  var pitch = 'https://pdxpickupsoccer.com/#' + search;
 });
 
 document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
